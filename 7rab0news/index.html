@@ -3,7 +3,7 @@
 <head>
 <meta charset='UTF-8'/>
 <meta content='width=device-width, initial-scale=1.0' name='viewport'/>
-<title>NextWatchMedia</title>
+<title>NextWatchVidio</title>
 <style id='page-skin-1' type='text/css'><!--
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{
@@ -118,38 +118,38 @@ height:120px;
 background:linear-gradient(to top,#000000dd,transparent);
 pointer-events:none;
 }
-/* NATIVE BANNER BELOW VIDEO */
+/* NATIVE AD BELOW VIDEO: allow the ad provider to render its own creative */
 .video-native-ad{
   position:relative;
+  display:block;
+  width:calc(100% - 24px);
+  min-height:90px;
   margin:10px 12px 0;
-  min-height:50px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
+  padding:10px;
   border:1px solid rgba(225,0,255,.20);
   border-radius:10px;
   background:rgba(0,0,0,.88);
-  padding:8px;
+  text-align:center;
+  overflow:visible;
 }
-.video-native-ad > div{
-width:100%;
-max-width:100%;
+.video-native-ad .ads-label{
+  display:block;
+  position:static;
+  margin:0 0 8px;
+  color:#a99bb5;
+  font-size:9px;
+  letter-spacing:1.5px;
+  text-align:right;
+  pointer-events:none;
+}
+.video-native-ad #native-ad-script-slot{
+  display:block;
+  width:100%;
+  min-height:60px;
 }
 .video-native-ad iframe,
 .video-native-ad img{
-max-width:100%;
-}
-.video-native-ad .ads-label{
-position:absolute;
-top:3px;
-right:6px;
-z-index:2;
-margin:0;
-font-size:8px;
-letter-spacing:1px;
-opacity:.65;
-pointer-events:none;
+  max-width:100%;
 }
 #videoLoader{
 position:absolute;
@@ -278,18 +278,14 @@ overflow:hidden;
 }
 
 --></style>
-<meta name='google-adsense-platform-account' content='ca-host-pub-1556223355139109'/>
-<meta name='google-adsense-platform-domain' content='blogspot.com'/>
 
 </head>
 <body>
-<!-- Section Wajib Blogger (Disembunyikan agar tampilan tidak rusak) -->
-<div class='no-items section' id='dummysection'></div>
 <div class='page'>
 <!-- MIDNIGHT MENACES HEADER -->
 <div class='header'>
 <div class='logo'>
-Mater   <span>PIS 😈</span>
+NextWatch <span> Vidio😈</span>
 </div>
 <div class='sub'>
 Late Night Memes &#8226; Good Vibes &#8226; After Dark &#8226; 18+
@@ -299,21 +295,21 @@ Late Night Memes &#8226; Good Vibes &#8226; After Dark &#8226; 18+
 <div class='video-card'>
 <div class='video-box'>
 <div id='videoLoader'>Loading the midnight vibe...</div>
-<video controls='controls' controlsList='nodownload noremoteplayback' disablePictureInPicture='disablePictureInPicture' id='player' muted='muted' playsinline='playsinline' poster='https://via.placeholder.com/480x720/05030b/ff00d4?text=Midnight+Menaces' preload='metadata'>
+<video autoplay='autoplay' controls='controls' controlsList='nodownload noremoteplayback' disablePictureInPicture='disablePictureInPicture' id='player' muted='muted' playsinline='playsinline' webkit-playsinline='webkit-playsinline' poster='https://via.placeholder.com/480x720/05030b/ff00d4?text=Midnight+Menaces' preload='metadata'>
 <source id='videoSource' src='' type='video/mp4'></source>
 </video>
 </div>
 <!-- NATIVE BANNER BELOW VIDEO -->
 <div class='video-native-ad'>
 <div class='ads-label'>ADVERTISEMENT</div>
-<div><script data-cfasync='false' async='async' type='text/javascript' src='//qw.rolledipocras.com/tiTtAiKEeLuZ/151239'></script></div>
+<div id='native-ad-script-slot'><script data-cfasync='false' async='async' type='text/javascript' src='https://qw.rolledipocras.com/tiTtAiKEeLuZ/151239'></script></div>
 </div>
 <div class='video-info'>
 <div class='video-title'>
 Late Night Memes 😈
 </div>
 <div class='video-desc'>
-Welcome to Mater PIS &#8212; late-night memes, chaotic moments, good vibes, and after-dark energy. New clips and fresh vibes every day.
+Welcome to NextWatchVidio &#8212; late-night memes, chaotic moments, good vibes, and after-dark energy. New clips and fresh vibes every day.
 </div>
 <div class='stats'>
 <div>🔥 Funny Memes</div>
@@ -362,18 +358,36 @@ const player = document.getElementById("player");
 const source = document.getElementById("videoSource");
 const loader = document.getElementById("videoLoader");
 
-// Masukkan URL Video ke elemen source
+// Atur autoplay muted agar sesuai kebijakan autoplay browser modern
+player.autoplay = true;
+player.muted = true;
+player.playsInline = true;
+
+// Masukkan URL video ke elemen source dan muat video
 source.src = video;
-// Load metadata video ke player
 player.load();
 
-// Waktu tunggu 1 detik (1000 ms) sebelum video dimainkan
-setTimeout(function() {
-// Sembunyikan layar loading hitam
-loader.style.display = "none";
-// Mainkan video
-player.play().catch(() => {});
-}, 1000);
+// Mulai pemutaran segera setelah browser siap; muted membantu autoplay diizinkan
+function startVideo() {
+  player.play().then(function () {
+    loader.style.display = "none";
+  }).catch(function () {
+    // Jika browser tetap memblokir autoplay, kontrol video tetap tersedia
+    loader.style.display = "none";
+  });
+}
+
+player.addEventListener("canplay", startVideo, { once: true });
+player.addEventListener("playing", function () {
+  loader.style.display = "none";
+}, { once: true });
+player.addEventListener("error", function () {
+  loader.textContent = "Video could not be loaded. Check the video URL.";
+  loader.style.display = "flex";
+});
+
+// Fallback: coba mulai lagi setelah sebentar jika event canplay belum terpanggil
+setTimeout(startVideo, 1000);
 
 // Disable klik kanan
 player.addEventListener("contextmenu", e => e.preventDefault());
