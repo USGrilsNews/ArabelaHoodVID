@@ -1,0 +1,212 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NextWatchVidio</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:#080611;
+  color:#fff;
+  font-family:Arial,sans-serif;
+}
+header{
+  text-align:center;
+  padding:24px 12px;
+  background:linear-gradient(135deg,#210b3b,#080611);
+  border-bottom:1px solid #7625a8;
+}
+header h1{
+  margin:0;
+  font-size:30px;
+  color:#ff42df;
+  text-shadow:0 0 15px #b900ff;
+}
+header p{color:#c9b7d9;margin:8px 0 0}
+.container{max-width:600px;margin:auto;padding:15px}
+.ad{
+  min-height:50px;
+  margin:14px auto;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  text-align:center;
+}
+.section-title{
+  font-size:18px;
+  margin:18px 0 12px;
+  color:#ff42df;
+}
+.video-card{
+  padding:12px;
+  background:#151020;
+  border:1px solid #48245f;
+  border-radius:15px;
+  box-shadow:0 0 20px #8c00ff20;
+}
+.video-box{
+  position:relative;
+  background:#000;
+  border-radius:10px;
+  overflow:hidden;
+  min-height:200px;
+}
+video{
+  display:block;
+  width:100%;
+  max-height:75vh;
+  background:#000;
+}
+#videoLoader{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+  text-align:center;
+  color:#fff;
+  background:#080611;
+  z-index:1;
+  pointer-events:none;
+}
+.watch-btn{
+  display:block;
+  text-align:center;
+  margin-top:15px;
+  padding:13px;
+  border-radius:9px;
+  color:#fff;
+  font-weight:bold;
+  text-decoration:none;
+  background:linear-gradient(90deg,#8a00ff,#ff00a8);
+}
+footer{
+  text-align:center;
+  padding:25px 10px;
+  font-size:12px;
+  color:#8d809b;
+}
+</style>
+</head>
+
+<body>
+<header>
+  <h1>NextWatchVidio</h1>
+  <p>Viral Videos • Trending Clips • Entertainment</p>
+</header>
+
+<div class="container">
+
+  <!-- NATIVE BANNER PERTAMA: DI ATAS -->
+  <div class="ad">
+    <script data-cfasync="false" async
+      src="https://qw.rolledipocras.com/tiTtAiKEeLuZ/151239"></script>
+  </div>
+
+  <h2 class="section-title">🔥 Featured Video</h2>
+
+  <!-- NATIVE BANNER KEDUA: DI BAWAH BANNER PERTAMA -->
+  <div class="ad">
+    <script data-cfasync="false" async
+      src="https://ju.bionomysolera.com/tKxL7nY316cl3r5/155722"></script>
+  </div>
+
+  <div class="video-card">
+    <div class="video-box">
+      <div id="videoLoader">Memuat video...</div>
+
+      <video id="player"
+        autoplay
+        muted
+        playsinline
+        webkit-playsinline
+        controls
+        preload="auto">
+        <source id="videoSource" src="" type="video/mp4">
+        Browser kamu tidak mendukung video.
+      </video>
+    </div>
+
+    <a class="watch-btn" href="https://x-hubb.github.io/Badiesgirlhub/">
+      ▶ Watch More Videos
+    </a>
+  </div>
+
+</div>
+
+<footer>
+  © 2026 NextWatchVidio • All Rights Reserved
+</footer>
+
+<script>
+(function(){
+  const params = new URLSearchParams(window.location.search);
+  let video = params.get("v") || "jOFAnBRw1";
+
+  if(!/^https?:\/\//i.test(video)){
+    video = "https://cdn.videy.co/" + video;
+    if(!video.endsWith(".mp4")) video += ".mp4";
+  }
+
+  const player = document.getElementById("player");
+  const source = document.getElementById("videoSource");
+  const loader = document.getElementById("videoLoader");
+
+  source.src = video;
+  player.muted = true;
+  player.load();
+
+  function startVideo(){
+    player.play().then(function(){
+      loader.style.display = "none";
+    }).catch(function(){
+      loader.textContent = "Tekan tombol Play untuk memulai video";
+      loader.style.display = "flex";
+    });
+  }
+
+  player.addEventListener("canplay", startVideo, {once:true});
+
+  player.addEventListener("playing", function(){
+    loader.style.display = "none";
+  });
+
+  player.addEventListener("error", function(){
+    loader.textContent = "Video gagal dimuat. Periksa URL video.";
+    loader.style.display = "flex";
+  });
+
+  setTimeout(startVideo, 1000);
+})();
+</script>
+
+<!-- HISTATS COUNTER -->
+<script type="text/javascript">
+var _Hasync = _Hasync || [];
+_Hasync.push(['Histats.start','1,5044704,4,0,0,0,00010000']);
+_Hasync.push(['Histats.fasi','1']);
+_Hasync.push(['Histats.track_hits','']);
+(function(){
+  var hs = document.createElement('script');
+  hs.type = 'text/javascript';
+  hs.async = true;
+  hs.src = '//s10.histats.com/js15_as.js';
+  (document.getElementsByTagName('head')[0] ||
+   document.getElementsByTagName('body')[0]).appendChild(hs);
+})();
+</script>
+<noscript>
+  <a href="/" target="_blank">
+    <img src="//sstatic1.histats.com/0.gif?5044704&101"
+      alt="website statistics" border="0">
+  </a>
+</noscript>
+
+</body>
+</html>
